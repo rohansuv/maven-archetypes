@@ -2,6 +2,8 @@ package com.rhc.aggregates;
 
 import java.io.Serializable;
 
+import com.rhc.entities.Address;
+
 
 public class Customer implements Serializable {
 	
@@ -13,7 +15,7 @@ public class Customer implements Serializable {
 	
 	private String firstName;
 	private String lastName;
-	//private Address address;
+	private Address address = new Address();
 
 	public String getFirstName() {
 		return firstName;
@@ -31,7 +33,11 @@ public class Customer implements Serializable {
 		lastName = s;
 	}
 	
-	//public Address getAddress() {
-	//	return address;
-	//}
+	public void setAddress(Address a, int n, String s, String c, String st, int z) {
+		a.setAddress(n, s, c, st, z);
+	}
+	
+	public String getAddress() {
+		return address.getFullAddress();
+	}
 }

@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.kie.api.KieServices;
 
 import com.rhc.aggregates.Customer;
+import com.rhc.entities.Address;
 import com.rhc.services.AbstractBusinessServicesTest;
 
 public class CustomerServiceTest extends AbstractBusinessServicesTest{
@@ -23,8 +24,11 @@ public class CustomerServiceTest extends AbstractBusinessServicesTest{
 		// given
 		Assert.assertNotNull(customerService);
 		Customer leia = new Customer();
+		Address leiaAddress = new Address();
 		leia.setFirstName("Leia");
 		leia.setLastName("Organa");
+		
+		leia.setAddress(leiaAddress, 15, "Wow Street", "Raleigh", "NC", 11112);
 		
 		// when 
 		Long processId = customerService.startCustomerOnboardProcess(leia);
