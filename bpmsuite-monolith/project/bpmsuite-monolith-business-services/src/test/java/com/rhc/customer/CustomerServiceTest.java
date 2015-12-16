@@ -20,27 +20,39 @@ public class CustomerServiceTest extends AbstractBusinessServicesTest{
 	}
 	
 	@Test
-	public void shouldSuccessfullyStartACustomerOnboardProcess(){
+	public void shouldSuccessfullyStartACustomerOnboardProcessAndCompleteHumanTaskAndCompleteProcess (){
 		// given
 		Assert.assertNotNull(customerService);
+		
 		Customer leia = new Customer();
-		Address leiaAddress = new Address();
 		leia.setFirstName("Leia");
 		leia.setLastName("Organa");
 		
-		leia.setAddress(leiaAddress, 15, "Wow Street", "Raleigh", "NC", 11112);
 		
-		// when 
+		// when I start the process
 		Long processId = customerService.startCustomerOnboardProcess(leia);
+		
+		// when I complete the task
+		Address leiaAddress = new Address();
+
+		leiaAddress.setNum(15);
+		leiaAddress.setStreet("Wow Street");
+		leiaAddress.setCity("Raleigh");
+		leiaAddress.setState("NC");
+		leiaAddress.setZip(115555);
+		
+		customerService.addAddress(leiaAddress, processId);
 		 
-		// then
-		Assert.assertEquals( new Long(1), processId);
-		Assert.assertEquals( 1, customerService.getNumberOfCustomerOnboardProcessesInProgress());
+		// then the process should complete
+		Assert.assertTrue( customerService.isProcessComplete(processId));
 	}
 	
 	
 	public static String getKieJarPath(){
 		String dir = System.getProperty("user.dir");
-		return dir.substring(0, dir.lastIndexOf("/")) + "/bpmsuite-monolith-knowledge";
+		
+		String dir2 = dir.substring(0, dir.lastIndexOf("/")) + "/bpmsuite-monolith-knowledge";
+		System.err.println( dir2 );
+		return dir2;
 	}
 }

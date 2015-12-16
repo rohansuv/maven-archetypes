@@ -15,7 +15,7 @@ public class Customer implements Serializable {
 	
 	private String firstName;
 	private String lastName;
-	private Address address = new Address();
+	private Address address;
 
 	public String getFirstName() {
 		return firstName;
@@ -33,11 +33,24 @@ public class Customer implements Serializable {
 		lastName = s;
 	}
 	
-	public void setAddress(Address a, int n, String s, String c, String st, int z) {
-		a.setAddress(n, s, c, st, z);
+	
+	public void setAddress(Address a) {
+		address = a;
 	}
+	
+	
+
+	
 	
 	public String getAddress() {
 		return address.getFullAddress();
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [firstName=" + firstName + ", lastName=" + lastName
+				+ ", address=" + address + "]";
+	}
+	
+
 }

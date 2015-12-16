@@ -2,6 +2,7 @@ package com.rhc.customer;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
@@ -11,9 +12,9 @@ import org.jbpm.services.api.RuntimeDataService;
 import org.jbpm.services.api.UserTaskService;
 import org.jbpm.services.api.model.DeploymentUnit;
 import org.jbpm.services.api.model.ProcessInstanceDesc;
-import org.kie.api.KieServices;
 
 import com.rhc.aggregates.Customer;
+import com.rhc.entities.Address;
 import com.rhc.services.CustomerService;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -48,6 +49,27 @@ public class CustomerServiceImpl implements CustomerService {
 		// TODO switch the query to test the process status
 		Collection<ProcessInstanceDesc> processList = runtimeDataService.getProcessInstancesByProcessDefinition(CUSTOMER_ONBOARD_PROCESS_ID, null);
 		return processList.size();
+	}
+	
+	@Override
+	public boolean isProcessComplete(Long processId) {
+		ProcessInstanceDesc instance = runtimeDataService.getProcessInstanceById(processId);
+		
+		return instance.getState().equals( new Integer(2) );
+	}
+	
+	@Override
+	public void addAddress(Address address, Long processId) {
+		List<Long> taskIds = runtimeDataService.getTasksByProcessInstanceId(processId);
+		
+		userTaskService.claim(taskIds.get(0), "jboss");
+		userTaskService.start(taskIds.get(0), "jboss");
+		
+		Map<String, Object> taskVariables = new HashMap<String,Object>();
+		taskVariables.put("out_Address", address);
+		
+		userTaskService.complete(taskIds.get(0), "jboss", taskVariables);
+		
 	}
 
 	public void ensureCustomerKieJarIsDeploy() {
@@ -90,5 +112,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public void setUserTaskService(UserTaskService userTaskService) {
 		this.userTaskService = userTaskService;
 	}
+
+
+
+
 
 }
