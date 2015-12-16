@@ -14,6 +14,14 @@ public class Customer {
 		return lastName;
 	}
 	
+	public void setFirstName(String s) {
+		firstName = s;
+	}
+	
+	public void setLastName(String s) {
+		lastName = s;
+	}
+	
 	//public Address getAddress() {
 	//	return address;
 	//}
