@@ -4,7 +4,7 @@ public class Customer {
 	
 	private String firstName;
 	private String lastName;
-	private Address address;
+	//private Address address;
 
 	public String getFirstName() {
 		return firstName;
@@ -14,7 +14,7 @@ public class Customer {
 		return lastName;
 	}
 	
-	public Address getAddress() {
-		return address;
-	}
+	//public Address getAddress() {
+	//	return address;
+	//}
 }
