@@ -11,6 +11,7 @@ import org.jbpm.services.api.RuntimeDataService;
 import org.jbpm.services.api.UserTaskService;
 import org.jbpm.services.api.model.DeploymentUnit;
 import org.jbpm.services.api.model.ProcessInstanceDesc;
+import org.kie.api.KieServices;
 
 import com.rhc.aggregates.Customer;
 import com.rhc.services.CustomerService;
@@ -50,6 +51,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	public void ensureCustomerKieJarIsDeploy() {
+		//KieServices.Factory.get().getRepository().addKieModule(kModule);
+	
+		
 		if (!deploymentService.isDeployed(DEPLOYMENT_UNIT.getIdentifier())) {
 			deploymentService.deploy(DEPLOYMENT_UNIT);
 		}
