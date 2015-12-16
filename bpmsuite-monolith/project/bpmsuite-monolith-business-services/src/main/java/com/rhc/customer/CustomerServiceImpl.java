@@ -35,8 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
 		ensureCustomerKieJarIsDeploy();
 
 		Map<String, Object> processVariables = new HashMap<String, Object>();
-		processVariables.put("CustomerFirstName", customer.getFirstName());
-		processVariables.put("CustomerLastName", customer.getLastName());
+		processVariables.put("Customer", customer);
+		
 
 		Long processId = processService.startProcess(DEPLOYMENT_UNIT.getIdentifier(), CUSTOMER_ONBOARD_PROCESS_ID, processVariables);
 		return processId;
